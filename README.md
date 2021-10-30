@@ -1,3 +1,5 @@
-# Vuexy - Vuejs, React, HTML & Laravel Admin Dashboard Template
+# Pro Insight Test - FRONTEND
 
-**Vuexy – Vuejs, React, HTML & Laravel Admin Dashboard Template** – is the most developer friendly & highly customizable Admin Dashboard Template based on Bootstrap 4, Bootstrap Vue & Reactstrap.
+**Objetivo** - Realizar una interfaz que permita manejar el flujo de exportaciones de la empresa ABC y utilizar la API propuesta en el repositorio: https://github.com/marlons0707/proinsight-test-backend
+
+**Instalación** – Para instalar este proyecto, clonar en una carpeta el repositorio de GitHub y ejecutar el siguiente comando: `npm install`, para probarlo localmente ejecutar el siguiente comando: `npm run serve`.
