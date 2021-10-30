@@ -15,7 +15,7 @@ axiosIns.interceptors.request.use(
   async config => {
     // eslint-disable-next-line no-param-reassign
     config.headers = {
-      Authorization: `Bearer ${localStorage.getItem('FerreAuthToken')}`,
+      Authorization: `Bearer ${localStorage.getItem('ABCTestAuthToken')}`,
     }
     return config
   },

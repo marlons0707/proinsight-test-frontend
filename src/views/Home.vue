@@ -1,30 +1,43 @@
 <template>
   <div>
-    <b-card title="Kick start your project 🚀">
-      <b-card-text>All the best for your new project.</b-card-text>
-      <b-card-text>Please make sure to read our <b-link
-        href="https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/documentation/"
-        target="_blank"
-      >
-        Template Documentation
-      </b-link> to understand where to go from here and how to use our template.</b-card-text>
+    <b-card title="ABC Logística 📦">
+      <b-card-text>Su sistema para el mejor control de logística.</b-card-text>
+      <b-card-text>Agilizar sus procesos de logística y asegurar el flujo de sus exportaciones nunca había sido tan fácil.
+      </b-card-text>
     </b-card>
 
-    <b-card title="Want to integrate JWT? 🔒">
-      <b-card-text>We carefully crafted JWT flow so you can implement JWT with ease and with minimum efforts.</b-card-text>
-      <b-card-text>Please read our  JWT Documentation to get more out of JWT authentication.</b-card-text>
+    <b-card title="Tencologías 💻">
+      <b-card-text>Todo sistema debe contar con una interfaz sencilla y fácil de usar.</b-card-text>
+      <b-card-text>Es por eso que para este sistema utilizamos tecnologías modernas como VueJS, Laravel y AWS Lightsail.</b-card-text>
+    </b-card>
+
+    <b-card title="Repositorios 🐱">
+      <b-card-text>Código fuente en Github</b-card-text>
+      <b-link
+        href="https://github.com/marlons0707/proinsight-test-frontend"
+        target="_blank"
+      >
+        FRONTEND
+      </b-link>
+      <b-card-text>
+        <b-link
+          href="https://github.com/marlons0707/proinsight-test-backend"
+          target="_blank"
+        >
+          BACKEND
+        </b-link>
+      </b-card-text>
     </b-card>
   </div>
 </template>
 
 <script>
-import { BCard, BCardText, BLink } from 'bootstrap-vue'
+import { BCard, BCardText } from 'bootstrap-vue'
 
 export default {
   components: {
     BCard,
     BCardText,
-    BLink,
   },
 }
 </script>

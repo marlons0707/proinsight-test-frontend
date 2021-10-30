@@ -52,7 +52,7 @@ export default {
   },
   beforeCreate() {
     // Prevent unauthorized access
-    if (localStorage.getItem('FerreAuthToken') === null) {
+    if (localStorage.getItem('ABCTestAuthToken') === null) {
       this.$router.push('/login')
     }
 

@@ -30,10 +30,6 @@ export default [
     icon: 'UsersIcon',
     children: [
       {
-        title: 'Clientes',
-        route: 'contacts-customers',
-      },
-      {
         title: 'Proveedores',
         route: 'contacts-suppliers',
       },
@@ -47,28 +43,6 @@ export default [
         title: 'Compras',
         route: 'transactions-purchases',
       },
-      {
-        title: 'Ventas',
-        route: 'transactions-sales',
-      },
-    ],
-  },
-  {
-    title: 'Informes',
-    icon: 'BookIcon',
-    children: [
-      {
-        title: 'Compras',
-        route: 'reports-purchases',
-      },
-      {
-        title: 'Ventas',
-        route: 'reports-sales',
-      },
-      {
-        title: 'Inventario',
-        route: null,
-      },
     ],
   },
   {
@@ -78,28 +52,6 @@ export default [
       {
         title: 'Usuarios',
         route: null,
-      },
-      {
-        title: 'Privilegios',
-        route: null,
-      },
-    ],
-  },
-  {
-    title: 'Configuraciones',
-    icon: 'ToolIcon',
-    children: [
-      {
-        title: 'Organización',
-        route: 'settings-organization',
-      },
-      {
-        title: 'Sucursales',
-        route: 'settings-stores',
-      },
-      {
-        title: 'Ubicaciones',
-        route: 'settings-locations',
       },
     ],
   },

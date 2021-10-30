@@ -128,40 +128,6 @@
               </b-form-group>
             </validation-provider>
 
-            <!-- Ubicación -->
-            <validation-provider
-              #default="{ errors }"
-              name="ubicación"
-              rules="required"
-            >
-              <b-form-group
-                label="Ubicación:"
-                label-for="select-location"
-              >
-                <v-select
-                  v-if="locations"
-                  v-model="form.location_id"
-                  :options="locations"
-                  :reduce="location => location.id"
-                  :clearable="true"
-                  input-id="select-location"
-                  required
-                  @search="onSearchLocations"
-                >
-                  <template
-                    slot="option"
-                    slot-scope="option"
-                  >
-                    {{ option.label }} - {{ option.store }}
-                  </template>
-                  <template slot="no-options">
-                    Lo siento, no se encontraron ubicaciones
-                  </template>
-                </v-select>
-                <small class="text-danger">{{ errors[0] }}</small>
-              </b-form-group>
-            </validation-provider>
-
             <!-- Precio -->
             <validation-provider
               #default="{ errors }"
@@ -266,7 +232,6 @@ export default {
         description: '',
         unit_id: '',
         category_id: '',
-        location_id: '',
         stock: 0,
         price: '',
         cost: '',
@@ -274,7 +239,6 @@ export default {
       show: true,
       categories: [],
       units: [],
-      locations: [],
     }
   },
 
@@ -289,7 +253,6 @@ export default {
     this.getProduct()
     this.getUnits()
     this.getCategories()
-    this.getLocations()
   },
 
   methods: {
@@ -303,7 +266,6 @@ export default {
 
           this.form.unit_id = response.data.data.unit_id
           this.form.category_id = response.data.data.category_id
-          this.form.location_id = response.data.data.location_id
           this.form.stock = response.data.data.stock
           this.form.price = response.data.data.price
           this.form.cost = response.data.data.cost
@@ -396,51 +358,6 @@ export default {
         }, 300)
       } else {
         this.getCategories()
-      }
-    },
-
-    getLocations() {
-      axios
-        .get('location?perPage=10&sortField=id&sortDesc=desc&filterField=status&filterValue=Y')
-        .then(response => {
-          response.data.data.forEach(element => {
-            this.locations.push({
-              label: element.name,
-              id: element.id,
-              store: element.store_name,
-            })
-          })
-        })
-        .catch(error => {
-          this.showErrors(error)
-        })
-    },
-
-    onSearchLocations(search, loading) {
-      this.locations = []
-      if (search.length) {
-        loading(true)
-        if (this.timeout) clearTimeout(this.timeout)
-        this.timeout = setTimeout(() => {
-          axios
-            .get(`location?filterField=status&filterValue=Y&query=${search}`)
-            .then(response => {
-              loading(false)
-              this.locations = []
-              response.data.data.forEach(element => {
-                this.locations.push({
-                  label: element.name,
-                  id: element.id,
-                  store: element.store_name,
-                })
-              })
-            })
-            .catch(error => {
-              this.showErrors(error)
-            })
-        }, 300)
-      } else {
-        this.getLocations()
       }
     },
 

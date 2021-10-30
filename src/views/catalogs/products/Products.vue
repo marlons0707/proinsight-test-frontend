@@ -211,7 +211,6 @@ export default {
         { key: 'description', label: 'Descripción' },
 
         { key: 'category', label: 'Categoría' },
-        { key: 'location', label: 'Ubicación' },
         { key: 'unit', label: 'Medida' },
         { key: 'stock', label: 'Stock' },
         { key: 'price', label: 'Precio' },

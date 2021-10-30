@@ -44,44 +44,6 @@
           />
         </template>
 
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon
-            size="16"
-            icon="UserIcon"
-            class="mr-50"
-          />
-          <span>Profile</span>
-        </b-dropdown-item>
-
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon
-            size="16"
-            icon="MailIcon"
-            class="mr-50"
-          />
-          <span>Inbox</span>
-        </b-dropdown-item>
-
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon
-            size="16"
-            icon="CheckSquareIcon"
-            class="mr-50"
-          />
-          <span>Task</span>
-        </b-dropdown-item>
-
-        <b-dropdown-item link-class="d-flex align-items-center">
-          <feather-icon
-            size="16"
-            icon="MessageSquareIcon"
-            class="mr-50"
-          />
-          <span>Chat</span>
-        </b-dropdown-item>
-
-        <b-dropdown-divider />
-
         <b-dropdown-item
           link-class="d-flex align-items-center"
           @click="logout()"
@@ -91,7 +53,7 @@
             icon="LogOutIcon"
             class="mr-50"
           />
-          <span>Logout</span>
+          <span>Salir</span>
         </b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
@@ -119,7 +81,7 @@ export default {
         .post('logout')
         .then(response => {
           if (response.data.res) {
-            localStorage.removeItem('FerreAuthToken')
+            localStorage.removeItem('ABCTestAuthToken')
             this.$router.push({ name: 'login' })
           } else {
             throw (response)

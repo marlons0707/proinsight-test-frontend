@@ -2,9 +2,9 @@
   <!-- Error page-->
   <div class="misc-wrapper">
     <b-link class="brand-logo">
-      <ferre-sur-logo />
+      <ABCLogo />
       <h2 class="brand-text text-primary ml-1">
-        FerreSur
+        ABC
       </h2>
     </b-link>
 
@@ -40,12 +40,12 @@
 <script>
 /* eslint-disable global-require */
 import { BLink, BButton, BImg } from 'bootstrap-vue'
-import FerreSurLogo from '@core/layouts/components/Logo.vue'
+import ABCLogo from '@core/layouts/components/Logo.vue'
 import store from '@/store/index'
 
 export default {
   components: {
-    FerreSurLogo,
+    ABCLogo,
     BLink,
     BButton,
     BImg,

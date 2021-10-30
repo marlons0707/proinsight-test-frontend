@@ -5,9 +5,9 @@
       <!-- Login v1 -->
       <b-card class="mb-0">
         <b-link class="brand-logo">
-          <ferre-sur-logo />
+          <ABCLogo />
           <h2 class="brand-text text-primary">
-            FerreSur
+            ABC
           </h2>
         </b-link>
 
@@ -92,12 +92,6 @@
           </b-form>
         </validation-observer>
 
-        <b-card-text class="text-center mt-2">
-          <b-link>
-            <span>¿Olvidaste tu contraseña?</span>
-          </b-link>
-        </b-card-text>
-
       </b-card>
       <!-- /Login v1 -->
     </div>
@@ -108,12 +102,12 @@
 import axios from '@axios'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
-import FerreSurLogo from '@core/layouts/components/Logo.vue'
+import ABCLogo from '@core/layouts/components/Logo.vue'
 import { required, email } from '@/utils/validations/validations'
 
 export default {
   components: {
-    FerreSurLogo,
+    ABCLogo,
     ValidationProvider,
     ValidationObserver,
   },
@@ -149,7 +143,7 @@ export default {
             .post('login', params)
             .then(response => {
               if (response.data.res) {
-                localStorage.setItem('FerreAuthToken', response.data.token)
+                localStorage.setItem('ABCTestAuthToken', response.data.token)
                 this.$router.push({ name: 'home' })
               } else {
                 throw (response)

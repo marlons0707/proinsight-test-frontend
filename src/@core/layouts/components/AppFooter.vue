@@ -6,7 +6,7 @@
         class="ml-25"
         _href="https://1.envato.market/pixinvent_portfolio"
         _target="_blank"
-      ><b>FerreSur</b></b-link>
+      ><b>ABC</b></b-link>
       <span class="d-none d-sm-inline-block">, Derechos Reservados</span>
     </span>
 
@@ -14,12 +14,7 @@
       Desarrollado por <a
         href="https://marlons0707.github.io/"
         target="_blank"
-      ><b>Monkode</b></a>
-      <!-- <feather-icon
-        icon="HeartIcon"
-        size="21"
-        class="text-danger stroke-current"
-      /> -->
+      ><b>Marlon Saravia</b></a>
     </span>
   </p>
 </template>
