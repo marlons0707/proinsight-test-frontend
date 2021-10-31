@@ -51,7 +51,7 @@ export default [
     children: [
       {
         title: 'Usuarios',
-        route: null,
+        route: 'users',
       },
     ],
   },

@@ -144,6 +144,7 @@ export default {
             .then(response => {
               if (response.data.res) {
                 localStorage.setItem('ABCTestAuthToken', response.data.token)
+                localStorage.setItem('ABCTestUserData', response.data.user.name)
                 this.$router.push({ name: 'home' })
               } else {
                 throw (response)

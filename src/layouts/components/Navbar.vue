@@ -30,7 +30,7 @@
         <template #button-content>
           <div class="d-sm-flex d-none user-nav">
             <p class="user-name font-weight-bolder mb-0">
-              John Doe
+              {{ getUserName() }}
             </p>
             <span class="user-status">Admin</span>
           </div>
@@ -91,7 +91,9 @@ export default {
           this.showErrors(error)
         })
     },
-
+    getUserName() {
+      return localStorage.getItem('ABCTestUserData')
+    },
     makeToast(variant = null, title = null, message = null) {
       this.$bvToast.toast(message, {
         title,

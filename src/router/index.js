@@ -134,6 +134,24 @@ const router = new VueRouter({
         layout: 'full',
       },
     },
+    {
+      path: '/users',
+      name: 'users',
+      component: () => import('@/views/access/Users.vue'),
+      meta: {
+        pageTitle: 'Usuarios',
+        breadcrumb: [
+          {
+            text: 'Accesos',
+            link: true,
+          },
+          {
+            text: 'Usuarios',
+            active: true,
+          },
+        ],
+      },
+    },
 
     // Pages
     // =====================================================================
