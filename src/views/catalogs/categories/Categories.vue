@@ -207,7 +207,7 @@ export default {
       categoriesFields: [
         { key: 'actions', label: 'Acciones' },
         { key: 'id', label: '#' },
-        { key: 'name', label: 'Nombre' },
+        { key: 'name', label: 'Categoría' },
         { key: 'description', label: 'Descripción' },
         { key: 'status', label: 'Estado' },
         { key: 'created_at', label: 'Creado' },

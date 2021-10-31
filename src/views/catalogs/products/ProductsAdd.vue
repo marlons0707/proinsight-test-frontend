@@ -72,14 +72,34 @@
               </b-form-group>
             </validation-provider>
 
-            <!-- Medida -->
+            <!-- SKU -->
             <validation-provider
               #default="{ errors }"
-              name="unidad de medida"
+              name="SKU"
               rules="required"
             >
               <b-form-group
-                label="Unidad de Medida:"
+                label="SKU:"
+                label-for="input-sku"
+              >
+                <b-form-input
+                  id="input-sku"
+                  v-model="form.sku"
+                  placeholder="Ingresa un SKU"
+                  required
+                />
+                <small class="text-danger">{{ errors[0] }}</small>
+              </b-form-group>
+            </validation-provider>
+
+            <!-- Presentación -->
+            <validation-provider
+              #default="{ errors }"
+              name="presentación"
+              rules="required"
+            >
+              <b-form-group
+                label="Presentación:"
                 label-for="select-unit"
               >
                 <v-select
@@ -90,12 +110,54 @@
                   :clearable="true"
                   input-id="select-unit"
                   required
+                  placeholder="Selecciona la presentación"
                   @search="onSearchUnits"
                 >
                   <template slot="no-options">
-                    Lo siento, no se encontraron unidades de medida
+                    Lo siento, no se encontraron presentaciones
                   </template>
                 </v-select>
+                <small class="text-danger">{{ errors[0] }}</small>
+              </b-form-group>
+            </validation-provider>
+
+            <!-- Volumen -->
+            <validation-provider
+              #default="{ errors }"
+              name="volumen"
+              rules="required"
+            >
+              <b-form-group
+                label="Volumen (Ancho x Largo x Alto):"
+                label-for="input-vol"
+              >
+                <b-form-input
+                  id="input-vol"
+                  v-model="form.volume"
+                  placeholder="Ingresa el volumen del producto"
+                  required
+                />
+                <small class="text-danger">{{ errors[0] }}</small>
+              </b-form-group>
+            </validation-provider>
+
+            <!-- Unidades por caja -->
+            <validation-provider
+              #default="{ errors }"
+              name="unidades por caja"
+              rules="required"
+            >
+              <b-form-group
+                label="Unidades por caja:"
+                label-for="input-per-boc"
+              >
+                <b-form-input
+                  id="input-per-boc"
+                  v-model="form.units_per_box"
+                  class="form-control"
+                  placeholder="Ingresa unidades por caja"
+                  type="number"
+                />
                 <small class="text-danger">{{ errors[0] }}</small>
               </b-form-group>
             </validation-provider>
@@ -118,79 +180,13 @@
                   :clearable="true"
                   input-id="select-category"
                   required
+                  placeholder="Selecciona la categoría"
                   @search="onSearchCategories"
                 >
                   <template slot="no-options">
                     Lo siento, no se encontraron categorías
                   </template>
                 </v-select>
-                <small class="text-danger">{{ errors[0] }}</small>
-              </b-form-group>
-            </validation-provider>
-
-            <!-- Precio -->
-            <validation-provider
-              #default="{ errors }"
-              name="precio"
-              rules="required"
-            >
-              <b-form-group
-                label="Precio:"
-                label-for="input-price"
-              >
-                <b-form-input
-                  id="input-price"
-                  v-model="form.price"
-                  class="form-control"
-                  placeholder="Precio en quetzales"
-                  type="number"
-                  min="1"
-                  step="any"
-                />
-                <small class="text-danger">{{ errors[0] }}</small>
-              </b-form-group>
-            </validation-provider>
-
-            <!-- Costo -->
-            <validation-provider
-              #default="{ errors }"
-              name="costo"
-              rules="required"
-            >
-              <b-form-group
-                label="Costo:"
-                label-for="input-cost"
-              >
-                <b-form-input
-                  id="input-cost"
-                  v-model="form.cost"
-                  class="form-control"
-                  placeholder="Costo en quetzales"
-                  type="number"
-                  min="1"
-                  step="any"
-                />
-                <small class="text-danger">{{ errors[0] }}</small>
-              </b-form-group>
-            </validation-provider>
-
-            <!-- Stock inicial -->
-            <validation-provider
-              #default="{ errors }"
-              name="stock inicial"
-              rules="required"
-            >
-              <b-form-group
-                label="Stock inicial:"
-                label-for="input-stock"
-              >
-                <b-form-input
-                  id="input-stock"
-                  v-model="form.stock"
-                  class="form-control"
-                  placeholder="Cantidad inicial"
-                  type="number"
-                />
                 <small class="text-danger">{{ errors[0] }}</small>
               </b-form-group>
             </validation-provider>
@@ -248,9 +244,9 @@ export default {
         description: '',
         unit_id: '',
         category_id: '',
-        stock: 0,
-        price: '',
-        cost: '',
+        sku: '',
+        volume: '',
+        units_per_box: '',
       },
       show: true,
       categories: [],
@@ -278,6 +274,7 @@ export default {
           this.showErrors(error)
         })
     },
+
     onSearchUnits(search, loading) {
       this.units = []
       if (search.length) {
@@ -320,6 +317,7 @@ export default {
           this.showErrors(error)
         })
     },
+
     onSearchCategories(search, loading) {
       this.categories = []
       if (search.length) {
@@ -381,9 +379,9 @@ export default {
       this.form.description = ''
       this.form.unit_id = ''
       this.form.category_id = ''
-      this.form.stock = 0
-      this.form.price = ''
-      this.form.cost = ''
+      this.form.sku = ''
+      this.form.volume = ''
+      this.form.units_per_box = ''
 
       // Trick to reset/clear native browser form validation state
       this.show = false

@@ -16,7 +16,7 @@
         <!-- Header -->
         <div class="d-flex justify-content-between align-items-center content-sidebar-header px-2 py-1">
           <h5 class="mb-0">
-            Editar Medida
+            Editar Presentación
           </h5>
           <feather-icon
             class="ml-1 cursor-pointer"
@@ -39,7 +39,7 @@
               rules="required"
             >
               <b-form-group
-                label="Medida:"
+                label="Presentación:"
                 label-for="input-name"
               >
                 <b-form-input
@@ -154,7 +154,7 @@ export default {
           axios
             .put(`unit/${this.unitId}`, this.form)
             .then(response => {
-              this.makeToast('success', 'Unidad de medida actualizada', `Se actualizó la unidad de medida a: ${response.data.data.name}.`)
+              this.makeToast('success', 'Presentación actualizada', `Se actualizó la presentación a: ${response.data.data.name}.`)
               this.clearForm()
               this.$emit('update:unit-edit-sidebar-active', false)
               this.$emit('refreshData')
@@ -163,7 +163,7 @@ export default {
               this.showErrors(error)
             })
         } else {
-          this.makeToast('danger', 'Error', 'No es posible actualizar la unidad de medida.')
+          this.makeToast('danger', 'Error', 'No es posible actualizar la presentación.')
         }
       })
     },

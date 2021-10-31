@@ -27,7 +27,6 @@
         </div>
 
         <!-- Campos formulario -->
-        <!-- Campos formulario -->
         <validation-observer ref="simpleRules">
           <b-form
             v-if="show"
@@ -72,14 +71,32 @@
               </b-form-group>
             </validation-provider>
 
-            <!-- Medida -->
+            <!-- SKU -->
             <validation-provider
               #default="{ errors }"
-              name="unidad de medida"
+              name="SKU"
+            >
+              <b-form-group
+                label="SKU:"
+                label-for="input-sku"
+              >
+                <b-form-input
+                  id="input-sku"
+                  v-model="form.sku"
+                  placeholder="Ingresa un SKU"
+                />
+                <small class="text-danger">{{ errors[0] }}</small>
+              </b-form-group>
+            </validation-provider>
+
+            <!-- Presentación -->
+            <validation-provider
+              #default="{ errors }"
+              name="presentación"
               rules="required"
             >
               <b-form-group
-                label="Unidad de Medida:"
+                label="Presentación:"
                 label-for="select-unit"
               >
                 <v-select
@@ -93,9 +110,48 @@
                   @search="onSearchUnits"
                 >
                   <template slot="no-options">
-                    Lo siento, no se encontraron unidades de medida
+                    Lo siento, no se encontraron presentaciones
                   </template>
                 </v-select>
+                <small class="text-danger">{{ errors[0] }}</small>
+              </b-form-group>
+            </validation-provider>
+
+            <!-- Volumen -->
+            <validation-provider
+              #default="{ errors }"
+              name="volumen"
+            >
+              <b-form-group
+                label="Volumen (Ancho x Largo x Alto):"
+                label-for="input-vol"
+              >
+                <b-form-input
+                  id="input-vol"
+                  v-model="form.volume"
+                  placeholder="Ingresa el volumen del producto"
+                />
+                <small class="text-danger">{{ errors[0] }}</small>
+              </b-form-group>
+            </validation-provider>
+
+            <!-- Unidades por caja -->
+            <validation-provider
+              #default="{ errors }"
+              name="unidades por caja"
+              rules="required"
+            >
+              <b-form-group
+                label="Unidades por caja:"
+                label-for="input-per-boc"
+              >
+                <b-form-input
+                  id="input-per-boc"
+                  v-model="form.units_per_box"
+                  class="form-control"
+                  placeholder="Ingresa unidades por caja"
+                  type="number"
+                />
                 <small class="text-danger">{{ errors[0] }}</small>
               </b-form-group>
             </validation-provider>
@@ -127,60 +183,6 @@
                 <small class="text-danger">{{ errors[0] }}</small>
               </b-form-group>
             </validation-provider>
-
-            <!-- Precio -->
-            <validation-provider
-              #default="{ errors }"
-              name="precio"
-              rules="required"
-            >
-              <b-form-group
-                label="Precio:"
-                label-for="input-price"
-              >
-                <b-form-input
-                  id="input-price"
-                  v-model="form.price"
-                  class="form-control"
-                  placeholder="Precio en quetzales"
-                  type="number"
-                  min="1"
-                  step="any"
-                />
-                <small class="text-danger">{{ errors[0] }}</small>
-              </b-form-group>
-            </validation-provider>
-
-            <!-- Costo -->
-            <validation-provider
-              #default="{ errors }"
-              name="costo"
-              rules="required"
-            >
-              <b-form-group
-                label="Costo:"
-                label-for="input-cost"
-              >
-                <b-form-input
-                  id="input-cost"
-                  v-model="form.cost"
-                  class="form-control"
-                  placeholder="Costo en quetzales"
-                  type="number"
-                  min="1"
-                  step="any"
-                />
-                <small class="text-danger">{{ errors[0] }}</small>
-              </b-form-group>
-            </validation-provider>
-
-            <!-- Stock actual -->
-            <b-form-group
-              label="Stock actual:"
-              label-for="input-stock"
-            >
-              <b style="font-size: 25px">{{ form.stock }}</b>
-            </b-form-group>
 
             <b-button
               type="submit"
@@ -232,9 +234,9 @@ export default {
         description: '',
         unit_id: '',
         category_id: '',
-        stock: 0,
-        price: '',
-        cost: '',
+        sku: '',
+        volume: '',
+        units_per_box: '',
       },
       show: true,
       categories: [],
@@ -266,9 +268,9 @@ export default {
 
           this.form.unit_id = response.data.data.unit_id
           this.form.category_id = response.data.data.category_id
-          this.form.stock = response.data.data.stock
-          this.form.price = response.data.data.price
-          this.form.cost = response.data.data.cost
+          this.form.sku = response.data.data.sku
+          this.form.volume = response.data.data.volume
+          this.form.units_per_box = response.data.data.units_per_box
         })
         .catch(error => {
           this.showErrors(error)
@@ -387,6 +389,11 @@ export default {
       // Reset our form values
       this.form.name = ''
       this.form.description = ''
+      this.form.unit_id = 0
+      this.form.category_id = 0
+      this.form.sku = ''
+      this.form.volume = ''
+      this.form.units_per_box = 0
 
       // Trick to reset/clear native browser form validation state
       this.show = false

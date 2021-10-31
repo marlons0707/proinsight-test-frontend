@@ -46,18 +46,18 @@ const router = new VueRouter({
       },
     },
     {
-      path: '/catalogos/medidas',
+      path: '/catalogos/presentaciones',
       name: 'catalogs-units',
       component: () => import('@/views/catalogs/units/Units.vue'),
       meta: {
-        pageTitle: 'Medidas',
+        pageTitle: 'Presentaciones',
         breadcrumb: [
           {
             text: 'Catálogos',
             link: true,
           },
           {
-            text: 'Unidades de Medidas',
+            text: 'Presentaciones',
             active: true,
           },
         ],

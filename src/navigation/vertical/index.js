@@ -16,7 +16,7 @@ export default [
         route: 'catalogs-categories',
       },
       {
-        title: 'Medidas',
+        title: 'Presentaciones',
         route: 'catalogs-units',
       },
       {

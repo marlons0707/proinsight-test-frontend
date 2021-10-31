@@ -16,7 +16,7 @@
         <!-- Header -->
         <div class="d-flex justify-content-between align-items-center content-sidebar-header px-2 py-1">
           <h5 class="mb-0">
-            Nueva Medida
+            Nueva Presentación
           </h5>
           <feather-icon
             class="ml-1 cursor-pointer"
@@ -40,7 +40,7 @@
               rules="required"
             >
               <b-form-group
-                label="Medida:"
+                label="Presentación:"
                 label-for="input-name"
               >
                 <b-form-input
@@ -134,7 +134,7 @@ export default {
           axios
             .post('unit', this.form)
             .then(response => {
-              this.makeToast('success', 'Unidad de medida agregada', `Se ha creado la medida ${response.data.data.name}.`)
+              this.makeToast('success', 'Presentación agregada', `Se ha creado la presentación ${response.data.data.name}.`)
               this.clearForm()
               this.$emit('update:unit-add-sidebar-active', false)
               this.$emit('refreshData')
@@ -144,7 +144,7 @@ export default {
               this.showErrors(error)
             })
         } else {
-          this.makeToast('danger', 'Error', 'No es posible crear la unidad de medida.')
+          this.makeToast('danger', 'Error', 'No es posible crear la presentación.')
         }
       })
     },

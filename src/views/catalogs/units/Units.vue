@@ -207,7 +207,7 @@ export default {
       unitsFields: [
         { key: 'actions', label: 'Acciones' },
         { key: 'id', label: '#' },
-        { key: 'name', label: 'Medida' },
+        { key: 'name', label: 'Presentación' },
         { key: 'description', label: 'Descripción' },
         { key: 'status', label: 'Estado' },
         { key: 'created_at', label: 'Creado' },
@@ -258,8 +258,8 @@ export default {
 
     deleteUnit(id) {
       this.$bvModal
-        .msgBoxConfirm('¿Deseas eliminar la unidad de medida?', {
-          title: 'Eliminar unidade de medida',
+        .msgBoxConfirm('¿Deseas eliminar la presentación?', {
+          title: 'Eliminar presentación',
           size: 'sm',
           okVariant: 'danger',
           okTitle: 'SI',
@@ -273,7 +273,7 @@ export default {
             axios
               .delete(`unit/${id}`)
               .then(response => {
-                this.makeToast('success', 'Medida eliminada', `Se ha eliminado la unidad de medida ${response.data.data.name}.`)
+                this.makeToast('success', 'Presentación eliminada', `Se ha eliminado la presentación ${response.data.data.name}.`)
                 this.getUnits()
               })
               .catch(error => {
