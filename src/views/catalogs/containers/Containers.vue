@@ -1,15 +1,16 @@
 <template>
 
   <div>
-    <prices-add
-      :price-add-sidebar-active.sync="priceAddSidebarActive"
-      @refreshData="getPrices"
+    <containers-add
+      :container-add-sidebar-active.sync="containersAddSidebarActive"
+      @refreshData="getContainers"
     />
 
     <!-- Table Container Card -->
     <b-card
       no-body
     >
+
       <div class="m-2">
 
         <!-- Table Top -->
@@ -29,8 +30,9 @@
               class="per-page-selector d-inline-block ml-50 mr-1"
             />
             <b-button
+              _class="btn-icon rounded-circle"
               variant="primary"
-              @click="priceAddSidebarActive = true"
+              @click="containersAddSidebarActive = true"
             >
               <!-- <feather-icon icon="PlusIcon" /> -->
               Nuevo
@@ -61,8 +63,8 @@
         primary-key="id"
         show-empty
         empty-text="No se encontraron registros coincidientes"
-        :items="pricesData"
-        :fields="pricesFields"
+        :items="containersData"
+        :fields="containersFields"
         :per-page="perPage"
       >
 
@@ -82,15 +84,6 @@
           </span>
         </template>
 
-        <!-- Column: Id -->
-        <template #cell(price)="data">
-          <b-link
-            class="font-weight-bold text-success"
-          >
-            Q.{{ data.item.price }}
-          </b-link>
-        </template>
-
         <!-- Column: Actions -->
         <template #cell(actions)="data">
           <div class="text-nowrap">
@@ -107,7 +100,7 @@
                 />
               </template>
               <b-dropdown-item
-                @click="deletePrice(data.item.id)"
+                @click="deleteContainer(data.item.id)"
               >
                 <feather-icon icon="TrashIcon" />
                 <span class="align-middle ml-50">Eliminar</span>
@@ -123,12 +116,12 @@
 
           <!-- Pagination info -->
           <b-col
-            v-if="pricesMeta"
+            v-if="containersMeta"
             cols="12"
             sm="6"
             class="d-flex align-items-center justify-content-center justify-content-sm-start"
           >
-            <span class="text-muted">Mostrando del {{ pricesMeta.from }} al {{ pricesMeta.to }} de {{ pricesMeta.total }} registros</span>
+            <span class="text-muted">Mostrando del {{ containersMeta.from }} al {{ containersMeta.to }} de {{ containersMeta.total }} registros</span>
           </b-col>
 
           <!-- Pagination -->
@@ -139,9 +132,9 @@
           >
 
             <b-pagination
-              v-if="pricesMeta"
+              v-if="containersMeta"
               v-model="currentPage"
-              :total-rows="pricesMeta.total"
+              :total-rows="containersMeta.total"
               :per-page="perPage"
               first-number
               last-number
@@ -174,20 +167,19 @@
 <script>
 import axios from '@axios'
 import vSelect from 'vue-select'
-import PricesAdd from './PricesAdd.vue'
+import ContainersAdd from './ContainersAdd.vue'
 
 export default {
   components: {
     vSelect,
-    PricesAdd,
+    ContainersAdd,
   },
 
   data() {
     return {
-      priceAddSidebarActive: false,
+      containersAddSidebarActive: false,
 
       searchQuery: '',
-
       sortField: 'id',
       sortDesc: 'desc',
 
@@ -195,53 +187,55 @@ export default {
       perPageOptions: [5, 10, 25, 50, 100],
       currentPage: 1,
 
-      pricesFields: [
+      containersFields: [
         { key: 'actions', label: 'Acciones' },
         { key: 'id', label: '#' },
-        { key: 'supplier', label: 'Proveedor' },
-        { key: 'product', label: 'Producto' },
-        { key: 'price', label: 'Precio' },
+        { key: 'name', label: 'Contenedor' },
+        { key: 'type', label: 'Tipo' },
+        // { key: 'status', label: 'Estado' },
         { key: 'created_at', label: 'Creado' },
         { key: 'updated_at', label: 'Actualizado' },
       ],
-      pricesData: null,
-      pricesMeta: null,
+      containersData: null,
+      containersMeta: null,
+
+      updateShow: false,
     }
   },
 
   watch: {
     perPage() {
-      this.getPrices()
+      this.getContainers()
     },
     currentPage() {
-      this.getPrices()
+      this.getContainers()
     },
     searchQuery() {
-      this.getPrices()
+      this.getContainers()
     },
   },
 
   created() {
-    this.getPrices()
+    this.getContainers()
   },
 
   methods: {
-    getPrices() {
+    getContainers() {
       axios
-        .get(`price?perPage=${this.perPage}&page=${this.currentPage}&query=${this.searchQuery}&sortField=${this.sortField}&sortDesc=${this.sortDesc}`)
+        .get(`container?perPage=${this.perPage}&page=${this.currentPage}&query=${this.searchQuery}&sortField=${this.sortField}&sortDesc=${this.sortDesc}`)
         .then(response => {
-          this.pricesMeta = response.data.meta
-          this.pricesData = response.data.data
+          this.containersMeta = response.data.meta
+          this.containersData = response.data.data
         })
         .catch(error => {
           this.showErrors(error)
         })
     },
 
-    deletePrice(id) {
+    deleteContainer(id) {
       this.$bvModal
-        .msgBoxConfirm('¿Deseas eliminar el precio?', {
-          title: 'Eliminar precio',
+        .msgBoxConfirm('¿Deseas eliminar el contenedor?', {
+          title: 'Eliminar contenedor',
           size: 'sm',
           okVariant: 'danger',
           okTitle: 'SI',
@@ -253,10 +247,10 @@ export default {
         .then(value => {
           if (value) {
             axios
-              .delete(`price/${id}`)
-              .then(() => {
-                this.makeToast('success', 'Precio eliminado', 'Se ha eliminado el precio por proveedor.')
-                this.getPrices()
+              .delete(`container/${id}`)
+              .then(response => {
+                this.makeToast('success', 'Contenedor eliminado', `Se ha eliminado el contenedor ${response.data.data.name}.`)
+                this.getContainers()
               })
               .catch(error => {
                 this.showErrors(error)
@@ -276,7 +270,7 @@ export default {
         this.sortField = field
         this.sortDesc = 'asc'
       }
-      this.getPrices()
+      this.getContainers()
     },
 
     makeToast(variant = null, title = null, message = null) {

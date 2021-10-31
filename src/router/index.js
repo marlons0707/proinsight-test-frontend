@@ -99,6 +99,24 @@ const router = new VueRouter({
         ],
       },
     },
+    {
+      path: '/catalogo/contenedores',
+      name: 'catalogs-containers',
+      component: () => import('@/views/catalogs/containers/Containers.vue'),
+      meta: {
+        pageTitle: 'Contenedores',
+        breadcrumb: [
+          {
+            text: 'Catálogos',
+            link: true,
+          },
+          {
+            text: 'Contenedores',
+            active: true,
+          },
+        ],
+      },
+    },
 
     // Contacts
     // =====================================================================

@@ -27,6 +27,10 @@ export default [
         title: 'Precios',
         route: 'catalogs-prices',
       },
+      {
+        title: 'Contenedores',
+        route: 'catalogs-containers',
+      },
     ],
   },
   {
