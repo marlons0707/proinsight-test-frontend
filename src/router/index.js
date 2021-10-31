@@ -81,6 +81,24 @@ const router = new VueRouter({
         ],
       },
     },
+    {
+      path: '/catalogo/precios',
+      name: 'catalogs-prices',
+      component: () => import('@/views/catalogs/prices/Prices.vue'),
+      meta: {
+        pageTitle: 'Precios',
+        breadcrumb: [
+          {
+            text: 'Catálogos',
+            link: true,
+          },
+          {
+            text: 'Precios',
+            active: true,
+          },
+        ],
+      },
+    },
 
     // Contacts
     // =====================================================================

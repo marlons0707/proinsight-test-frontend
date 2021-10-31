@@ -18,6 +18,8 @@ export const mixinErrors = {
           Object.keys(errorList).forEach(key => {
             errorMsg += errorList[key]
           })
+        } else {
+          errorMsg += ` ${errorList}`
         }
 
         if (error.response.status === 401) {

@@ -23,6 +23,10 @@ export default [
         title: 'Productos',
         route: 'catalogs-products',
       },
+      {
+        title: 'Precios',
+        route: 'catalogs-prices',
+      },
     ],
   },
   {
