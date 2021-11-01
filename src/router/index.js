@@ -142,18 +142,18 @@ const router = new VueRouter({
     // Transactions
     // =====================================================================
     {
-      path: '/transacciones/compras',
+      path: '/transacciones/envios',
       name: 'transactions-purchases',
       component: () => import('@/views/transactions/purchases/Purchases.vue'),
       meta: {
-        pageTitle: 'Compras',
+        pageTitle: 'Envíos',
         breadcrumb: [
           {
             text: 'Transacciones',
             link: true,
           },
           {
-            text: 'Compras',
+            text: 'Envíos',
             active: true,
           },
         ],

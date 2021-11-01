@@ -45,10 +45,10 @@ export default [
   },
   {
     title: 'Transacciones',
-    icon: 'BoxIcon',
+    icon: 'TruckIcon',
     children: [
       {
-        title: 'Compras',
+        title: 'Envíos',
         route: 'transactions-purchases',
       },
     ],

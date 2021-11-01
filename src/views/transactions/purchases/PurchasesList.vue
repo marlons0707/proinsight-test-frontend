@@ -218,11 +218,13 @@ export default {
         { key: 'id', label: '#' },
         { key: 'status', label: 'Estado' },
         { key: 'supplier', label: 'Proveedor' },
+        { key: 'container', label: 'Contenedor' },
         { key: 'document', label: 'Documento Ext.' },
         { key: 'total', label: 'Total' },
-        { key: 'comments', label: 'Comentarios' },
         { key: 'user', label: 'Ingresado por' },
-        { key: 'purchase_date', label: 'Fecha de compra' },
+        { key: 'purchase_date', label: 'Fecha de envío' },
+        { key: 'date_attempt', label: 'Fecha posible de entrega' },
+        { key: 'place_arrival', label: 'Fecha real de arribo' },
         { key: 'created_at', label: 'Fecha de ingreso' },
       ],
       purchasesData: null,
@@ -271,6 +273,10 @@ export default {
         this.sortDesc = 'asc'
       }
       this.getPurchases()
+    },
+
+    deletePurchase() {
+      //
     },
   },
 }

@@ -67,7 +67,42 @@
                     </validation-provider>
                   </b-col>
 
-                  <!-- Col: Fecha -->
+                  <!-- Col: Contenedor -->
+                  <b-col
+                    cols="12"
+                    xl="4"
+                    md="6"
+                  >
+                    <h6 class="mb-1 mt-1">
+                      Contenedor:
+                    </h6>
+                    <validation-provider
+                      #default="{ errors }"
+                      name="contenedor"
+                      rules="required"
+                    >
+                      <b-form-group>
+                        <v-select
+                          v-if="containersOptions"
+                          :options="containersOptions"
+                          input-id="select-containers"
+                          :reduce="container => container"
+                          :clearable="true"
+                          placeholder="Selecciona el contenedor"
+                          required
+                          @search="onSearchContainers"
+                          @input="val => purchaseData.container_id = val.id"
+                        >
+                          <template slot="no-options">
+                            Lo siento, no se encontraron contenedores
+                          </template>
+                        </v-select>
+                        <small class="text-danger">{{ errors[0] }}</small>
+                      </b-form-group>
+                    </validation-provider>
+                  </b-col>
+
+                  <!-- Col: Fecha del envío -->
                   <b-col
                     cols="12"
                     xl="4"
@@ -75,24 +110,74 @@
                   >
                     <validation-provider
                       #default="{ errors }"
-                      name="fecha"
+                      name="fecha del envío"
                       rules="required"
                     >
                       <b-form-group>
                         <h6 class="mb-1 mt-1">
-                          Fecha:
+                          Fecha del envío:
                         </h6>
                         <flat-pickr
                           v-model="purchaseData.purchase_date"
                           class="form-control invoice-edit-input"
-                          placeholder="Fecha de la compra"
+                          placeholder="Fecha del envío"
                         />
                         <small class="text-danger">{{ errors[0] }}</small>
                       </b-form-group>
                     </validation-provider>
                   </b-col>
 
-                  <!-- Col: # Compra -->
+                  <!-- Fecha posible de entrega -->
+                  <b-col
+                    cols="12"
+                    xl="4"
+                    md="6"
+                  >
+                    <validation-provider
+                      #default="{ errors }"
+                      name="fecha posible de entrega"
+                      rules="required"
+                    >
+                      <b-form-group>
+                        <h6 class="mb-1 mt-1">
+                          Fecha posible de entrega:
+                        </h6>
+                        <flat-pickr
+                          v-model="purchaseData.date_attempt"
+                          class="form-control invoice-edit-input"
+                          placeholder="Fecha posible de entrega"
+                        />
+                        <small class="text-danger">{{ errors[0] }}</small>
+                      </b-form-group>
+                    </validation-provider>
+                  </b-col>
+
+                  <!-- Fecha real de llegada -->
+                  <!-- <b-col
+                    cols="12"
+                    xl="4"
+                    md="6"
+                  >
+                    <validation-provider
+                      #default="{ errors }"
+                      name="fecha real de llegada"
+                      rules="required"
+                    >
+                      <b-form-group>
+                        <h6 class="mb-1 mt-1">
+                          Fecha real de llegada:
+                        </h6>
+                        <flat-pickr
+                          v-model="purchaseData.date_attempt"
+                          class="form-control invoice-edit-input"
+                          placeholder="Fecha real de llegada"
+                        />
+                        <small class="text-danger">{{ errors[0] }}</small>
+                      </b-form-group>
+                    </validation-provider>
+                  </b-col> -->
+
+                  <!-- Col: Doc. Externo -->
                   <b-col
                     cols="12"
                     xl="4"
@@ -111,6 +196,7 @@
                       </b-input-group>
                     </b-form-group>
                   </b-col>
+
                 </b-row>
               </b-card-body>
 
@@ -249,7 +335,7 @@
               <b-card-body class="invoice-padding pb-0">
                 <b-row>
                   <!-- Col: Contact Person -->
-                  <b-col
+                  <!-- <b-col
                     cols="12"
                     xl="4"
                     md="6"
@@ -271,7 +357,7 @@
                         <small class="text-danger">{{ errors[0] }}</small>
                       </b-form-group>
                     </validation-provider>
-                  </b-col>
+                  </b-col> -->
 
                   <!-- Col: Total -->
                   <b-col
@@ -299,11 +385,19 @@
               <hr class="invoice-spacing">
 
               <!-- Note -->
-              <b-card-body class="invoice-padding pt-0">
+              <!-- <b-card-body class="invoice-padding pt-0">
                 <span class="font-weight-bold">Observaciones: </span>
                 <b-form-textarea
                   v-model="purchaseData.comments"
                   placeholder="Comentarios y anotaciones relacionadas con la compra"
+                />
+              </b-card-body> -->
+
+              <b-card-body class="invoice-padding pt-0">
+                <span class="font-weight-bold">Dirección de entrega: </span>
+                <b-form-textarea
+                  v-model="purchaseData.place_arrival"
+                  placeholder="Dirección de entrega"
                 />
               </b-card-body>
 
@@ -372,10 +466,13 @@ export default {
       // Purchase
       purchaseData: {
         supplier_id: '',
+        container_id: '',
         document: '',
         contact: '',
         purchase_date: '',
-        comments: '',
+        date_attempt: '',
+        date_arrival: '',
+        place_arrival: '',
         products: [JSON.parse(JSON.stringify(
           { // Detail template
             product_id: null,
@@ -398,6 +495,7 @@ export default {
 
       // Products
       productsOptions: [],
+      containersOptions: [],
       show: true,
     }
   },
@@ -418,7 +516,7 @@ export default {
 
   created() {
     this.getSuppliers()
-    this.getProducts()
+    this.getContainers()
     window.addEventListener('resize', this.initTrHeight)
   },
 
@@ -471,31 +569,70 @@ export default {
       }
     },
 
+    getContainers() {
+      this.containersOptions = []
+      axios
+        .get('container?perPage=10&sortField=id&sortDesc=desc&filterField=status&filterValue=Y')
+        .then(response => {
+          response.data.data.forEach(element => {
+            this.containersOptions.push({
+              label: element.name,
+              id: element.id,
+            })
+          })
+        })
+        .catch(error => {
+          this.showErrors(error)
+        })
+    },
+
+    onSearchContainers(search, loading) {
+      this.containersOptions = []
+      if (search.length) {
+        loading(true)
+        if (this.timeout) clearTimeout(this.timeout)
+        this.timeout = setTimeout(() => {
+          axios
+            .get(`container?filterField=status&filterValue=Y&query=${search}`)
+            .then(response => {
+              loading(false)
+              this.containersOptions = []
+              response.data.data.forEach(element => {
+                this.containersOptions.push({
+                  label: element.name,
+                  id: element.id,
+                })
+              })
+            })
+            .catch(error => {
+              this.showErrors(error)
+            })
+        }, 300)
+      } else {
+        this.getSuppliers()
+      }
+    },
+
     setSupplierData(supplier) {
       if (supplier) {
-        // get Supplier
-        axios
-          .get(`supplier/${supplier.id}`)
-          .then(response => {
-            this.purchaseData.contact = response.data.data.contact_name
-            this.purchaseData.supplier_id = response.data.data.id
-          })
-          .catch(error => {
-            this.showErrors(error)
-          })
+        this.productsOptions = []
+        this.purchaseData.supplier_id = supplier.id
+        this.getProducts()
+      } else {
+        this.productsOptions = []
       }
     },
 
     getProducts() {
       this.productsOptions = []
       axios
-        .get('product?perPage=10&sortField=id&sortDesc=desc&filterField=status&filterValue=Y')
+        .get(`price/${this.purchaseData.supplier_id}/prices?perPage=10&sortField=id&sortDesc=desc&filterField=status&filterValue=Y`)
         .then(response => {
           response.data.data.forEach(element => {
             this.productsOptions.push({
-              label: element.name,
-              id: element.id,
-              cost: element.cost,
+              label: element.product,
+              id: element.product_id,
+              cost: element.price,
               description: element.description,
             })
           })
@@ -561,6 +698,7 @@ export default {
       // Reset our form values
       this.purchaseData.supplier_id = ''
       this.purchaseData.purchase_date = ''
+      this.purchaseData.container_id = ''
       this.purchaseData.document = ''
       this.purchaseData.contact = ''
       this.purchaseData.comments = ''

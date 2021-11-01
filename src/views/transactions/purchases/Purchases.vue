@@ -4,7 +4,7 @@
     content-class="mt-1"
   >
     <!-- This tabs content will always be mounted -->
-    <b-tab title="Historial de compras">
+    <b-tab title="Historial de envíos">
       <purchase-list
         :key="purchaseListKey"
         @addPurchaseTab="newTab($event)"
@@ -14,7 +14,7 @@
     <!-- This tabs content will not be mounted until the tab is shown -->
     <!-- and will be un-mounted when hidden -->
     <b-tab
-      title="Nueva compra"
+      title="Nuevo envío"
       lazy
     >
       <purchase-add @changeTab="changeTab($event)" />
@@ -24,7 +24,7 @@
     <b-tab
       v-for="purchase in purchasesTabs"
       :key="'purchase-tab-' + purchase"
-      :title="'Compra #' + purchase"
+      :title="'Envío #' + purchase"
       lazy
     >
       <purchase-view :purchase-id="purchase" />
